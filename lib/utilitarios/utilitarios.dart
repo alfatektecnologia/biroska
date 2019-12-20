@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 class Util with ChangeNotifier {
   static String userID = 'null ';
   static String userEmail = 'null';
-  static bool isAdmin;
+  static bool isAdmin = false;
   bool uploadingImage = false;
   static bool userHasFoto = false;
   static var urlImagem;
@@ -76,7 +76,7 @@ class Util with ChangeNotifier {
 
   //check if user is admin
   static Future<bool> userIsAdmin(userID) async {
-    bool isAdmin = false;//if null at database it becomes false too
+    //bool isAdmin = false;//if null at database it becomes false too
     Firestore db = Firestore.instance;
     QuerySnapshot querySnapshot = await db
         .collection("usuarios")

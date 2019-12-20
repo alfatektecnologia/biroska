@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: MenuBar(
         //choose a menu
-        isAdmin: this.widget.isAdmin,
+        isAdmin: Util.isAdmin,
         context: context,
       ),
       body: ChangeNotifierProvider<AppState>(
