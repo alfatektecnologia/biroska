@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:biroska/models/erros.dart';
+import 'package:biroska/models/evento.dart';
 import 'package:biroska/models/produto.dart';
 import 'package:biroska/models/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,10 +19,13 @@ class Util with ChangeNotifier {
   static bool userHasFoto = false;
   static var urlImagem;
   static var urlImagemCadastro;
+  static var urlImagemEvento;
+  static var urlImagemPromotion;
   static var urlImagemAudioMensagem;
   static final Firestore firestore = Firestore.instance;
   static final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  static List<Produto> listGeralProdutos=List(); //preparo uma lista para receber os produtos do snapShot
+  static List<Produto> listGeralProdutos =
+      List(); //preparo uma lista para receber os produtos do snapShot
 
   //navegar para outra pÃ¡gina (used inside an onclick button event)
   static void gotoScreen(Widget pagina, context) {
@@ -93,7 +97,7 @@ class Util with ChangeNotifier {
             isAdmin = true;
 
             // return isAdmin;
-          } 
+          }
         }
       }
     }
@@ -184,6 +188,20 @@ class Util with ChangeNotifier {
     });
   }
 
+  //atualizar dados
+  static Future atualizarDadosCadastro(
+      String collection, String key, Map dados) async {
+    firestore
+        .collection(collection)
+        .document(key)
+        .updateData(dados)
+        .then((value) {
+      print('dados salvos com sucesso');
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   //salvar imagem do perfil no firestore
   Future salvarFotoFirestore(File imagem) async {
     StorageReference pastaRaiz = firebaseStorage.ref();
@@ -242,42 +260,30 @@ class Util with ChangeNotifier {
 
     uploadTask.onComplete.then((StorageTaskSnapshot snapshot) async {
       String url = await snapshot.ref.getDownloadURL();
-      urlImagemCadastro = url; 
-      notifyListeners();
-    });
-  }
-/* 
-  //salvar imagem do cadastro no firestore
-  Future salvarFotoCadastroFirestore(File imagem, String colecao) async {
-    String nomeArquivo = DateTime.now().microsecondsSinceEpoch.toString();
-    StorageReference pastaRaiz = firebaseStorage.ref();
-    StorageReference arquivo = pastaRaiz
-        .child(colecao)
-        .child(nomeArquivo + '.jpg'); //todo checar de não é nullo
-
-    //upload da imagem
-    StorageUploadTask uploadTask = arquivo.putFile(imagem);
-
-    //controlar o processo de upload
-    uploadTask.events.listen((StorageTaskEvent storageEvent) {
-      if (storageEvent.type == StorageTaskEventType.progress) {
-        uploadingImage = true;
-        // print('uploading... $uploadingImage');
-        notifyListeners();
-      } else if (storageEvent.type == StorageTaskEventType.success) {
-        uploadingImage = false;
-        //print('uploading... $uploadingImage');
-
-        notifyListeners();
+      switch (colecao) {
+        case 'eventos':
+          urlImagemEvento = url;
+          notifyListeners();
+          break;
+        case 'produtos':
+          urlImagemCadastro = url;
+          notifyListeners();
+          break;
+        case 'promoções':
+          urlImagemPromotion = url;
+          notifyListeners();
+          break;
+        default:
+          urlImagemCadastro = url;
+          notifyListeners();
       }
     });
+  }
 
-    uploadTask.onComplete.then((StorageTaskSnapshot snapshot) async {
-      String url = await snapshot.ref.getDownloadURL();
-      urlImagem = url;
-      notifyListeners();
-    });
-  } */
+/* gerar pedido, salvar pedido...*/
+  static gerarPedido(int indice, Produto produto) {
+    //nao implantar agora...
+  }
 
   //salvar imagem/audio da mensagem no firestore, não utilizado no momento
   Future salvarFotoAudioMensagemFirestore(File imagem) async {
@@ -442,14 +448,13 @@ class Util with ChangeNotifier {
 
   //recuperar produtos ativos
   static Future<List<Produto>> getProdutosAtivos() async {
-    List<Produto> listGerProdutos=List();
+    List<Produto> listGerProdutos = List();
     //retorna um snapShot de todos os produtos
-    QuerySnapshot querySnapshot =
-        await firestore.collection('produtos')
+    QuerySnapshot querySnapshot = await firestore
+        .collection('produtos')
         .where('isAtivo', isEqualTo: true)
         //.where('categoria', isEqualTo:categoria)
         .getDocuments();
-  
 
     for (DocumentSnapshot item in querySnapshot.documents) {
       var dados = item.data; //dados recebe um Map<String,dynamic>
@@ -459,23 +464,55 @@ class Util with ChangeNotifier {
 
       Produto produto = Produto(
         nomeProduto: dados['nome'],
-        valorProduto:dados['valor'],
-        valorMeioProduto:dados['valorMeio'],
+        valorProduto: dados['valor'],
+        valorMeioProduto: dados['valorMeio'],
         descrProduto: dados['descricao'],
         categoria: dados['categoria'],
-        
-        fotoUrl:dados['url'],);
-     
+        fotoUrl: dados['url'],
+      );
 
       listGerProdutos.add(produto);
-      listGeralProdutos=listGerProdutos;
+      listGeralProdutos = listGerProdutos;
     }
-    listGeralProdutos=listGerProdutos;
+    listGeralProdutos = listGerProdutos;
     //notifyListeners();
     return listGerProdutos;
-    
   }
 
+//recuperar eventos ativos
+  static Future<List<Evento>> getEventosAtivos() async {
+    List<Evento> listGerEventos = List();
+    //retorna um snapShot de todos os produtos
+    QuerySnapshot querySnapshot = await firestore
+        .collection('eventos')
+        .where('isAtivo', isEqualTo: true)
+        //.where('categoria', isEqualTo:categoria)
+        
+        .getDocuments();
+
+    for (DocumentSnapshot item in querySnapshot.documents) {
+      var dados = item.data; //dados recebe um Map<String,dynamic>
+
+
+      /* if (dados['id'] == userID)
+        continue; //se a condição é verdadeira, não inclue o usuario na lista */
+
+      Evento evento = Evento(
+          nomeEvento: dados['nomeEvento'],
+          dataEvento: dados['dataEvento'],
+          isAtivo: dados['isAtivo'],
+          eventoUrl: dados['eventoUrl'],
+          userId: dados['userId'],
+          dataCadastro: dados['dataCadastro'],
+          key: item.documentID);//the id will be used to update isAtivo to false
+      print(item.documentID);
+      listGerEventos.add(evento);
+      /*listGeralProdutos=listGerProdutos; */
+    }
+    /*  listGeralProdutos=listGerProdutos;*/
+    //notifyListeners();
+    return listGerEventos;
+  }
 
 //show message like snackbar
   static showFlushbar(BuildContext context, String mensagem) {
@@ -486,7 +523,8 @@ class Util with ChangeNotifier {
     )..show(context);
   }
 
-  List<Produto> getList(String nomeCategoria)  {//como rodar isso qdo houver clic em outra categoria?
+  List<Produto> getList(String nomeCategoria) {
+    //como rodar isso qdo houver clic em outra categoria?
 
     List<Produto> lProd = List();
     if (listGeralProdutos != null) {
@@ -501,6 +539,4 @@ class Util with ChangeNotifier {
 
     return lProd;
   }
-
-
 }

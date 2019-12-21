@@ -82,7 +82,7 @@ class CaixaMensagem extends StatefulWidget {
 }
 
 class _CaixaMensagemState extends State<CaixaMensagem> {
-  bool isAudio = true; //to change icon in floating button
+  bool isAudio = false; //to change icon in floating button
   TextEditingController _mensagemController = TextEditingController();
   FlutterSound flutterSound = FlutterSound();
 
@@ -176,7 +176,7 @@ if (_recorderSubscription != null) {
                   } else {
                     _enviarMensagem(
                         widget.idContato, widget.nome, widget.fotoUrl);
-                    isAudio = true; //default icon
+                    isAudio = false; //default icon
                     _mensagemController.clear();
                   }
                 });

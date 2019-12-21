@@ -13,7 +13,7 @@ class ChatPerfil extends StatefulWidget {
 
 class _ChatPerfilState extends State<ChatPerfil> {
   final _nomeController = TextEditingController();
-  // final _perfilKey = GlobalKey<_ChatPerfilState>();
+  
   var _perfilformKey = GlobalKey<FormState>();
   bool isMaior = false;
   bool isResponsible = false;

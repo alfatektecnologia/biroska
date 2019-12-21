@@ -28,8 +28,6 @@ dependencies:
 
   path: ^1.6.4
   path_provider: ^1.5.1
-<<<<<<< HEAD
-  google_maps_flutter: ^0.5.21+15
   share_extend: ^1.1.0
   connectivity: ^0.4.6+1
   location: ^2.3.5
@@ -37,13 +35,7 @@ dependencies:
   flushbar: ^1.9.1
   flutter_sound: ^1.7.0
   
-=======
-  wifi: ^0.1.5
->>>>>>> 21/1219 - camera and wifi pub
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:

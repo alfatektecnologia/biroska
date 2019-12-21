@@ -8,6 +8,6 @@
         <bitmap
             android:gravity="center"
            
-            android:src="@drawable/logo_biroska_splash" />
+            android:src="@drawable/biroska_fachada" />
     </item>
 </layer-list>

@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   final Map dadosUsuario;
+
   Login(this.dadosUsuario);
 
   @override
@@ -47,15 +48,13 @@ class _LoginState extends State<Login> {
 
       //salvando o erro na nuvem
       ErroReport erro = ErroReport(
-        codigoErro:'erro validando dados' ,
+        codigoErro: 'erro validando dados',
         localErro: 'validadeDataAndSave',
-        emailUser: _emailController.text ,
-        date: DateTime.now() ,
+        emailUser: _emailController.text,
+        date: DateTime.now(),
         wasFixed: false,
-
       );
       Util.salvarErros(erro.toMap());
-
     }
   }
 
@@ -79,19 +78,17 @@ class _LoginState extends State<Login> {
       //userIsAdmin(user.uid);
       gotoPagina(context, HomePage(isAdmin));
     }).catchError((e) {
-
       //salvando o erro na nuvem
       ErroReport erro = ErroReport(
-        codigoErro: e.toString() ,
+        codigoErro: e.toString(),
         localErro: 'Login=>signIn',
-        emailUser: _emailController.text ,
-        date: DateTime.now() ,
+        emailUser: _emailController.text,
+        date: DateTime.now(),
         wasFixed: false,
-
       );
       Util.salvarErros(erro.toMap());
 
-     // print('Falha na autenticação' + e.toString());
+      // print('Falha na autenticação' + e.toString());
       //mostrarAlerta('Falha na autenticação. Verifique sua senha!');
       messageError = 'Falha na autenticação. Verifique sua senha!';
       //show snackbar
@@ -110,23 +107,26 @@ class _LoginState extends State<Login> {
 
       gotoPagina(context, HomePage(isAdmin));
     }).catchError((e) {
+      PlatformException erro = e;
 
-      //salvando o erro na nuvem
-      ErroReport erro = ErroReport(
-        codigoErro: e.toString() ,
-        localErro: 'Login=>createUser',
-        emailUser: _emailController.text ,
-        date: DateTime.now() ,
-        wasFixed: false,
+      if (erro.code != 'ERROR_EMAIL_ALREADY_IN_USE') {
+//salvando o erro na nuvem
+        ErroReport error = ErroReport(
+          codigoErro: e.toString(),
+          localErro: 'Login=>createUser',
+          emailUser: _emailController.text,
+          date: DateTime.now(),
+          wasFixed: false,
+        );
+        Util.salvarErros(error.toMap());
+        /*estou considerando que a senha nunca poderá estar errada, pois ainda não foi cadastrada */
+        messageError = 'Erro no cadastramento. E-mail já cadastrado!';
+        //show snackbar
+        showMessage(messageError);
 
-      );
-      Util.salvarErros(erro.toMap());
-      /*estou considerando que a senha nunca poderá estar errada, pois ainda não foi cadastrada */
-      messageError = 'Erro no cadastramento. E-mail já cadastrado!';
-      //show snackbar
-      showMessage(messageError);
-
-      print('Falha na criação' + e.toString());
+        print('Falha na criação' + e.toString());
+      } else
+        signIn(email, senha);
     });
   }
 
@@ -137,17 +137,15 @@ class _LoginState extends State<Login> {
         messageError = 'Senha enviada para seu e-mail';
         showMessage(messageError);
       }).catchError((e) {
-
         //salvando o erro na nuvem
-      ErroReport erro = ErroReport(
-        codigoErro: e.toString() ,
-        localErro: 'Login=>sendEmailWithPass',
-        emailUser: _emailController.text ,
-        date: DateTime.now() ,
-        wasFixed: false,
-
-      );
-      Util.salvarErros(erro.toMap());
+        ErroReport erro = ErroReport(
+          codigoErro: e.toString(),
+          localErro: 'Login=>sendEmailWithPass',
+          emailUser: _emailController.text,
+          date: DateTime.now(),
+          wasFixed: false,
+        );
+        Util.salvarErros(erro.toMap());
         messageError = 'Falha no re-envio de senha!';
         showMessage(messageError);
       });
