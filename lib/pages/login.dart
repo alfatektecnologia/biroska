@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   final Map dadosUsuario;
-
   Login(this.dadosUsuario);
 
   @override

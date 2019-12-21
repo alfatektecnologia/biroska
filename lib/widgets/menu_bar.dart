@@ -97,6 +97,7 @@ class MenuBar extends StatelessWidget {
             title: Text("Sair"),
             onTap: () => exit(0),
           ),
+          
         ],
       ),
     );
