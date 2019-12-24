@@ -34,19 +34,19 @@ class _CadastroEventosState extends State<CadastroEventos> {
   //saving and validating
   void validateDataAndSave(context) {
     final form = _eventoformKey.currentState;
-    if (form.validate() && Util.userHasFoto) {
+    if (form.validate() && Util.urlImagemEvento != null) {
       print('Evento is valid');
       Evento evento = Evento(
         nomeEvento: _nomeController.text,
         dataEvento: _dateController.text,
         isAtivo: true,
-        eventoUrl: Util.urlImagem,
+        eventoUrl: Util.urlImagemEvento,
         userId: Util.userID,
         dataCadastro: DateTime.now().toString()
       );
       
                         
-                        Util.salvarDados("eventos", Util.userID, evento.toMap());
+                        Util.salvarDadosCadastro("eventos", Util.userID, evento.toMap());
       //show message
       showFlushbar(context);
     } else {
@@ -75,10 +75,10 @@ class _CadastroEventosState extends State<CadastroEventos> {
                   builder: (context, util, _) => Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: Util.urlImagem !=null
-                            ?NetworkImage(Util.urlImagem)
-                            :null,
-                            fit: BoxFit.fill),
+                            image: Util.urlImagemEvento !=null
+                            ?NetworkImage(Util.urlImagemEvento)
+                            :AssetImage('assets/images/fachada.jpeg'),
+                            fit: BoxFit.cover),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.white24),

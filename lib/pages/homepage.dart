@@ -228,25 +228,62 @@ class _ListaProdutosState extends State<ListaProdutos> {
         return Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            height: 300,
+             height: 300,
             width: 300,
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+           
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               border: Border.all(width: 3, color: Colors.white),
-              color: Colors.orange,
+              color: Colors.orange[50],
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Image.network(produto.fotoUrl, width: 300),
-                Text(
-                  produto.nomeProduto,
-                  style: TextStyle(
-                    color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                     height: 300,
+            width: 300,
+                    child: Image.network(produto.fotoUrl, fit: BoxFit.cover,)),
+                    SizedBox(height: 10,),
+                  Text(
+                    produto.nomeProduto.toUpperCase(),
+                    style: TextStyle(
+                      fontSize:20,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 10,),
+                  Text(
+                    produto.descrProduto,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Text('Porção inteira: R\$ ' +
+                    produto.valorProduto.toStringAsFixed(2),
+                    style: TextStyle(fontSize: 20,
+                    fontWeight: FontWeight.bold ,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                 produto.valorMeioProduto>0
+                 ? Text('1/2 porção: R\$ ' +
+                    produto.valorMeioProduto.toStringAsFixed(2),
+                    style: TextStyle(fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  )
+                  :Container(),
+                  SizedBox(height: 10,),
+                  
+
+                ],
+              ),
             ),
           ),
         );

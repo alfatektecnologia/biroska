@@ -36,14 +36,14 @@ class _CadastroPromotionsState extends State<CadastroPromotions> {
   //saving and validating
   void validateDataAndSave(context) {
     final form = _formKey.currentState;
-    if (form.validate() && Util.urlImagemCadastro != null) {
+    if (form.validate() && Util.urlImagemPromotion != null) {
       print('Promotion is valid');
       var dateTime = DateTime.now();
       Promotion promotion = Promotion(
           produto: _nomeController.text,
           valor: double.parse(_valorController.text),
           valorMeia:double.parse(_valorMeiaController.text),
-          url: Util.urlImagemCadastro,
+          url: Util.urlImagemPromotion,
           isAtivo: true,
           userId: Util.userID,
           date: dateTime);
@@ -51,7 +51,7 @@ class _CadastroPromotionsState extends State<CadastroPromotions> {
       Util.salvarDados("promotions", Util.userID, promotion.toMap());
       //show message
       showFlushbar(context, 'Promoção salva com sucesso!');
-      Util.urlImagemCadastro = null;
+      Util.urlImagemPromotion = null;
       setState(() {
         //limpar caixa de textos
         _nomeController.text = "";
@@ -80,11 +80,11 @@ class _CadastroPromotionsState extends State<CadastroPromotions> {
                   builder: (context, util, _) => Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: Util.urlImagemCadastro != null
-                                ? NetworkImage(Util.urlImagemCadastro)
+                            image: Util.urlImagemPromotion != null
+                                ? NetworkImage(Util.urlImagemPromotion)
                                 : AssetImage(
                                     'assets/images/lambe_lambe-23.jpg'),
-                            fit: BoxFit.fill),
+                            fit: BoxFit.cover),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.white24),
@@ -105,12 +105,12 @@ class _CadastroPromotionsState extends State<CadastroPromotions> {
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        util.recuperarImagemCadastro("camera", 'eventos');
+                        util.recuperarImagemCadastro("camera", 'promotion');
                       },
                     ),
                     GestureDetector(
                         onTap: () =>
-                            util.recuperarImagemCadastro("camera", 'eventos'),
+                            util.recuperarImagemCadastro("camera", 'promotion'),
                         child: Text('Camera')),
                     SizedBox(
                       width: 30,
@@ -122,13 +122,13 @@ class _CadastroPromotionsState extends State<CadastroPromotions> {
                       ),
                       onPressed: () {
                         setState(() {
-                          util.recuperarImagemCadastro("galeria", 'eventos');
+                          util.recuperarImagemCadastro("galeria", 'promotion');
                         });
                       },
                     ),
                     GestureDetector(
                         onTap: () =>
-                            util.recuperarImagemCadastro("galeria", 'eventos'),
+                            util.recuperarImagemCadastro("galeria", 'promotion'),
                         child: Text('Galeria')),
                   ],
                 ),

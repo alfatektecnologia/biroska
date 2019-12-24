@@ -52,14 +52,14 @@ class MenuBar extends StatelessWidget {
               Util.gotoScreen(HomePage(Util.isAdmin), context);
             },
           ),
-          ListTile(
+         /*  ListTile(
             leading: Icon(Icons.assignment),
             title: Text("Meus pedidos"),
             onTap: () {
               Navigator.of(context).pop();
               Util.gotoScreen(Pedidos(), context);
             },
-          ),
+          ), */
           ListTile(
             leading: Icon(Icons.mood),
             title: Text("Batepapo"),
@@ -76,14 +76,14 @@ class MenuBar extends StatelessWidget {
               Util.gotoScreen(Eventos(), context);
             },
           ),
-          ListTile(
+          /* ListTile(
             leading: Icon(Icons.motorcycle),
             title: Text("Delivery"),
             onTap: () {
               Navigator.of(context).pop();
               Util.gotoScreen(Delivery(), context);
             },
-          ),
+          ), */
           ListTile(
             leading: Icon(Icons.local_offer),
             title: Text("Promoções"),
@@ -132,14 +132,14 @@ class MenuBar extends StatelessWidget {
               Util.gotoScreen(HomePage(Util.isAdmin), context);
             },
           ),
-          ListTile(
+          /* ListTile(
             leading: Icon(Icons.assignment),
             title: Text("Meus pedidos"),
             onTap: () {
               Navigator.of(context).pop();
               Util.gotoScreen(Pedidos(), context);
             },
-          ),
+          ), */
           ListTile(
             leading: Icon(Icons.mood),
             title: Text("Batepapo"),
@@ -156,14 +156,14 @@ class MenuBar extends StatelessWidget {
               Util.gotoScreen(Eventos(), context);
             },
           ),
-          ListTile(
+          /* ListTile(
             leading: Icon(Icons.motorcycle),
             title: Text("Delivery"),
             onTap: () {
               Navigator.of(context).pop();
               Util.gotoScreen(Delivery(), context);
             },
-          ),
+          ), */
           ListTile(
             leading: Icon(Icons.local_offer),
             title: Text("Promoções"),
@@ -177,7 +177,10 @@ class MenuBar extends StatelessWidget {
             title: Text("Sair"),
             onTap: () => exit(0),
           ),
-          Text('Administração', style: TextStyle(color: Colors.white24)),
+          Padding(
+            padding: const EdgeInsets.only(left:16.0),
+            child: Text('Administração', style: TextStyle(color: Colors.white38)),
+          ),
           ListTile(
             leading: Icon(Icons.playlist_add),
             title: Text("Cadastros"),

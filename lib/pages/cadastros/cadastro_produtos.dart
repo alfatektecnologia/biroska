@@ -79,7 +79,7 @@ class _CadastroProdutosState extends State<CadastroProdutos> {
                             image: Util.urlImagemCadastro != null
                                 ? NetworkImage(Util.urlImagemCadastro)
                                 : AssetImage('assets/images/fachada.jpeg'),
-                            fit: BoxFit.fill),
+                            fit: BoxFit.cover),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.white24),
