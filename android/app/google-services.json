@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "543319088874",
+    "firebase_url": "https://biroska-6f1f9.firebaseio.com",
+    "project_id": "biroska-6f1f9",
+    "storage_bucket": "biroska-6f1f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543319088874:android:24c042648643af45dd0193",
+        "android_client_info": {
+          "package_name": "br.com.alfatektecnologia.biroska"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543319088874-m6fa2d7r7qk1abjirv3g3fuh9mgk9phm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMYxtbJw64j7iG5dL0eOJJviaWdpKDx4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543319088874-m6fa2d7r7qk1abjirv3g3fuh9mgk9phm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
