@@ -17,7 +17,7 @@
         android:label="Biroska"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyDDnYDA64F9dtc9Ef-I4HqFL4wKOJqg29E"/>
+                android:value="secret--secret--secret"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
