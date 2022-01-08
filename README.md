@@ -11,3 +11,4 @@ Essa aplicação pretende:
 - todos usuários deverão estar autenticados
 - possibilidade de usuário imprimir comanda via wifi(verificar viabilidade de implementação)
 - toda mesa deverá ter um QRcode com os dados da mesa(nro, nome do estabelecimento, etc). Cliente usará esse Qrcode para efetuar o pedido.
+- apikey foi deletada por segurança
